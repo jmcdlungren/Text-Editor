@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
-const { InjectManifest } = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 module.exports = () => {
   return {
@@ -22,9 +22,10 @@ module.exports = () => {
       }),
      
       // Injects our custom service worker
-      new InjectManifest({
-        swSrc: './src-sw.js',
+      new GenerateSW({
         swDest: 'src-sw.js',
+        clientsClaim: true,
+        skipWaiting: true,
       }),
 
       new WebpackPwaManifest({
